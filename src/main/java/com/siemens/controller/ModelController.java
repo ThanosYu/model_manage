@@ -88,8 +88,8 @@ public class ModelController {
         try {
             String page = request.getParameter("page");
             String size = request.getParameter("size");
-            System.out.println("--------------page: " + page);
-            System.out.println("--------------size: " + size);
+            System.out.println("---------------page: " + page);
+            System.out.println("---------------size: " + size);
             Pageable pageable = new PageRequest(Integer.parseInt(page), Integer.parseInt(size));
             Iterable<Model> models = modelService.findAll(pageable);
             result.setData(models);
