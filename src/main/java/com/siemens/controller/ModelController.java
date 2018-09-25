@@ -30,7 +30,7 @@ public class ModelController {
     private ModelService modelService;
 
     /**
-     * 保存或更新模型
+     * 保存模型
      *
      * @param model
      * @return
