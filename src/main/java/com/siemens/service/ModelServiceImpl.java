@@ -3,10 +3,12 @@ package com.siemens.service;
 import com.siemens.dao.ModelDao;
 import com.siemens.model.Model;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Z003ZDBC on 9/25/2018.
@@ -23,31 +25,31 @@ public class ModelServiceImpl implements ModelService {
     }
 
     @Override
-    public Iterable<Model> findAll(Pageable pageable) {
+    public Page<Model> findAll(Pageable pageable) {
         return modelDao.findAll(pageable);
     }
 
     @Override
-    public Model findOne(Long id) {
-        return modelDao.findOne(id);
+    public Optional<Model> findOne(Long id) {
+        return modelDao.findById(id);
     }
 
 
     @Override
     public Iterable<Model> findMulti(List<Long> ids) {
-        return modelDao.findAll(ids);
+        return modelDao.findAllById(ids);
     }
 
     @Override
     public void deleteOne(Long id) {
-        modelDao.delete(id);
+        modelDao.deleteById(id);
     }
 
     @Override
     public void deleteMulti(List<Long> ids) {
 //        modelDao.delete(models);
         for (Long id : ids) {
-            modelDao.delete(id);
+            modelDao.deleteById(id);
         }
     }
 

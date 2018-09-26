@@ -7,6 +7,7 @@ import com.siemens.response.Status;
 import com.siemens.service.ModelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -82,7 +83,7 @@ public class ModelController {
     @RequestMapping(value = "/model", method = {RequestMethod.GET}, consumes = "application/json", produces = "application/json")
     @ResponseBody
     public Result queryAll(HttpServletRequest request) {
-        Result<Iterable<Model>> result = new Result<Iterable<Model>>();
+        Result<Page<Model>> result = new Result<Page<Model>>();
         result.setCode(Status.LSucceed.getCode());
         result.setMsg(Status.LSucceed.getMessage());
         try {
@@ -91,8 +92,8 @@ public class ModelController {
             System.out.println("---------------page: " + page);
             System.out.println("---------------size: " + size);
             Pageable pageable = new PageRequest(Integer.parseInt(page), Integer.parseInt(size));
-            Iterable<Model> models = modelService.findAll(pageable);
-            result.setData(models);
+            Page<Model> pageModel = modelService.findAll(pageable);
+            result.setData(pageModel);
         } catch (Exception e) {
             e.printStackTrace();
             result.setCode(Status.LFailed.getCode());
@@ -110,11 +111,11 @@ public class ModelController {
     @RequestMapping(value = "/model/{id}", method = {RequestMethod.GET}, consumes = "application/json", produces = "application/json")
     @ResponseBody
     public Result queryOne(@PathVariable String id) {
-        Result<Model> result = new Result<Model>();
+        Result<Optional<Model>> result = new Result<Optional<Model>>();
         result.setCode(Status.LSucceed.getCode());
         result.setMsg(Status.LSucceed.getMessage());
         try {
-            Model model = modelService.findOne(Long.valueOf(id));
+            Optional<Model> model = modelService.findOne(Long.valueOf(id));
             result.setData(model);
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,9 +1,11 @@
 package com.siemens.service;
 
 import com.siemens.model.Model;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Created by Z003ZDBC on 9/25/2018.
@@ -23,7 +25,7 @@ public interface ModelService {
      * @param pageable
      * @return
      */
-    Iterable<Model> findAll(Pageable pageable);
+    Page<Model> findAll(Pageable pageable);
 
     /**
      * 查询一个模型
@@ -31,7 +33,7 @@ public interface ModelService {
      * @param id
      * @return
      */
-    Model findOne(Long id);
+    Optional<Model> findOne(Long id);
 
     /**
      * 查询多个模型
