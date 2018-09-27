@@ -220,9 +220,9 @@ public class ModelController {
         try {
             Logger logger = LogManager.getRootLogger();
             System.out.println("---------------------------------------current level: "+logger.getLevel());
-            logger.info("----------------------------------------------info");
-            logger.debug("---------------------------------------------debug");
-            logger.error("---------------------------------------------error");
+            logger.info("----------------------------------------------INFO");
+            logger.debug("---------------------------------------------DEBUG");
+            logger.error("---------------------------------------------ERROR");
 
             Level l = Level.toLevel(level);
             logger.setLevel(l);
