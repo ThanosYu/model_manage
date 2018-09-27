@@ -1,10 +1,12 @@
 package com.siemens.controller;
 
 import com.siemens.model.Model;
-import com.siemens.dao.ModelDao;
 import com.siemens.response.Result;
 import com.siemens.response.Status;
 import com.siemens.service.ModelService;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.data.domain.Page;
@@ -201,6 +203,29 @@ public class ModelController {
         try {
             Integer status = map.get("status");
             modelService.updateStatus(status, id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setCode(Status.LFailed.getCode());
+            result.setMsg(Status.LFailed.getMessage());
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/log/{level}", method = {RequestMethod.GET}, consumes = "application/json", produces = "application/json")
+    @ResponseBody
+    public Result log(@PathVariable String level) {
+        Result<Optional<Model>> result = new Result<Optional<Model>>();
+        result.setCode(Status.LSucceed.getCode());
+        result.setMsg(Status.LSucceed.getMessage());
+        try {
+            Logger logger = LogManager.getRootLogger();
+            System.out.println("---------------------------------------current level: "+logger.getLevel());
+            logger.info("----------------------------------------------info");
+            logger.debug("---------------------------------------------debug");
+            logger.error("---------------------------------------------error");
+
+            Level l = Level.toLevel(level);
+            logger.setLevel(l);
         } catch (Exception e) {
             e.printStackTrace();
             result.setCode(Status.LFailed.getCode());
